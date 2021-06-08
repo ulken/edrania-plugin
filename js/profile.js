@@ -27,14 +27,17 @@ class Profile {
 	getClanUrl()
 	{
 		if (this.cache.clanUrl !== null) {
+			console.log("In-memory cached clan URL:", this.cache.clanUrl);
 			return this.cache.clanUrl;
 		}
 		
 		return this.getHtml().then(html => {
 			const clan = $(html).find('#centerContent table tr:nth(9) td a');
 			const clanUrl = clan.attr('href');
+			console.log("Clan URL:", clanUrl);
 
 			if (clanUrl && clanUrl.length > 0 && /^\/Clan\/\d+$/.test(clanUrl)) {
+				console.log("Caching and returning clan URL:", clanUrl);
 				return this.cache.clanUrl = clanUrl;
 			}
 
